@@ -17,14 +17,13 @@ import { helmetConfig } from './config/helmet.config';
 import { swaggerConfig } from './config/swagger.config';
 import { rateLimitConfig } from './config/rate-limit.config';
 
-import openaiPlugin from './plugins/openai.plugin';
+import sharpPlugin from './plugins/sharp.plugin';
 
-import moderationRoutes from './routes/moderation';
+import sharpRoutes from './routes';
 
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
 
-import { moderationImageSchema } from './schema/moderation/moderation-image.schema';
-import { moderationTextSchema } from './schema/moderation/moderation-text.schema';
+import { metadataSchema } from './schema/metadata.schema';
 
 import { FastifyInstance } from 'fastify/types/instance';
 import { ContentTypeParserDoneFunction } from 'fastify/types/content-type-parser';
@@ -44,7 +43,7 @@ export const main = async (): Promise<FastifyInstance> => {
   await fastifyInstance.register(fastifyHelmet, helmetConfig);
   await fastifyInstance.register(fastifyRateLimit, rateLimitConfig);
 
-  await fastifyInstance.register(openaiPlugin);
+  await fastifyInstance.register(sharpPlugin);
 
   // JSON SCHEMA CRUD
 
@@ -52,8 +51,7 @@ export const main = async (): Promise<FastifyInstance> => {
 
   // JSON SCHEMA MODELS
 
-  fastifyInstance.addSchema(moderationImageSchema);
-  fastifyInstance.addSchema(moderationTextSchema);
+  fastifyInstance.addSchema(metadataSchema);
 
   // SWAGGER
 
@@ -82,8 +80,8 @@ export const main = async (): Promise<FastifyInstance> => {
 
   await fastifyInstance.register(
     async (api: FastifyInstance): Promise<void> => {
-      api.register(moderationRoutes, {
-        prefix: '/moderation/'
+      api.register(sharpRoutes, {
+        prefix: '/'
       });
     },
     {

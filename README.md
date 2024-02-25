@@ -10,7 +10,7 @@ Setup
 
 Processes
 
-- `start:dev` local dev server http://localhost:4410
+- `start:dev` local dev server http://localhost:4420
 - `start:deploy` deploy
 - `start:debug` local dev server with code inspection enabled for debugging
 

@@ -2,8 +2,8 @@
 
 import { FastifyInstance } from 'fastify';
 
-import textMethod from './text';
+import metadataMethod from './metadata';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
-  fastify.register(textMethod);
+  fastify.register(metadataMethod);
 }
