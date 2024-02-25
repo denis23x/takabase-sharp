@@ -18,8 +18,8 @@ export const swaggerConfig: SwaggerOptions = {
     produces: ['application/json'],
     tags: [
       {
-        name: 'Moderation',
-        description: 'Moderation related end-points'
+        name: 'Sharp',
+        description: 'Node.js image processing'
       }
     ]
   }

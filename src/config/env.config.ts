@@ -8,7 +8,6 @@ export const envConfig: FastifyEnvOptions = {
   confKey: 'config',
   schema: {
     type: 'object',
-    required: ['OPENAI_API_KEY'],
     properties: {
       NODE_ENV: {
         type: 'string',
@@ -25,10 +24,6 @@ export const envConfig: FastifyEnvOptions = {
       ENABLE_SWAGGER: {
         type: 'boolean',
         default: false
-      },
-      OPENAI_API_KEY: {
-        type: 'string',
-        default: 'key'
       }
     }
   },
