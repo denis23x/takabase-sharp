@@ -10,6 +10,13 @@
         ]
       }
     },
+    "takabase-local": {
+      "hosting": {
+        "takabase-local-sharp": [
+          "takabase-local-sharp"
+        ]
+      }
+    },
     "takabase-prod": {
       "hosting": {
         "takabase-prod-sharp": [
