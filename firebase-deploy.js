@@ -13,6 +13,11 @@ const spawn = require('child_process').spawn;
         description: 'https://takabase-dev-sharp.web.app',
       },
       {
+        title: 'takabase-local',
+        value: 'takabase-local',
+        description: 'https://takabase-local-sharp.web.app',
+      },
+      {
         title: 'takabase-prod',
         value: 'takabase-prod',
         description: 'https://takabase-prod-sharp.web.app',
@@ -25,7 +30,7 @@ const spawn = require('child_process').spawn;
     type: 'confirm',
     name: 'value',
     message: 'Can you confirm?',
-    initial: select.value === 'takabase-dev'
+    initial: select.value !== 'takabase-prod'
   });
 
   if (select.value && confirm.value) {
