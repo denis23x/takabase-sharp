@@ -20,6 +20,7 @@ import { rateLimitConfig } from './config/rate-limit.config';
 import sharpPlugin from './plugins/sharp.plugin';
 
 import sharpRoutes from './routes';
+import sharpOutputRoutes from './routes/output';
 
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
 
@@ -82,6 +83,9 @@ export const main = async (): Promise<FastifyInstance> => {
     async (api: FastifyInstance): Promise<void> => {
       api.register(sharpRoutes, {
         prefix: '/'
+      });
+      api.register(sharpOutputRoutes, {
+        prefix: '/output/'
       });
     },
     {
