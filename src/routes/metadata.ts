@@ -84,8 +84,8 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         busboy.on('finish', async (): Promise<void> => {
           const validationPayload = (): any[] => {
             return [
-              request.server.sharp.getFileSizeValidation(reply, formFiles.input.size),
-              request.server.sharp.getMimeTypeValidation(reply, formFiles.input.mimeType)
+              request.server.sharp.getValidationFileSize(reply, formFiles.input.size),
+              request.server.sharp.getValidationMimeType(reply, formFiles.input.mimeType)
             ].filter((validation: FastifyReply | null) => validation !== null);
           };
 
