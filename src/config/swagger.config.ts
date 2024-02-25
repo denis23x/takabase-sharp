@@ -20,6 +20,10 @@ export const swaggerConfig: SwaggerOptions = {
       {
         name: 'Sharp',
         description: 'Node.js image processing'
+      },
+      {
+        name: 'Output',
+        description: 'Get output'
       }
     ]
   }
