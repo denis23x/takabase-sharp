@@ -19,6 +19,24 @@
       ]
     },
     {
+      "target": "takabase-local-sharp",
+      "public": "dist",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": {
+            "functionId": "sharp",
+            "region": "us-central1"
+          }
+        }
+      ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
       "target": "takabase-prod-sharp",
       "public": "dist",
       "rewrites": [
