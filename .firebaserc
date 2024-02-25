@@ -1,0 +1,22 @@
+{
+  "projects": {
+    "default": "takabase-dev"
+  },
+  "targets": {
+    "takabase-dev": {
+      "hosting": {
+        "takabase-dev-sharp": [
+          "takabase-dev-sharp"
+        ]
+      }
+    },
+    "takabase-prod": {
+      "hosting": {
+        "takabase-prod-sharp": [
+          "takabase-prod-sharp"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
