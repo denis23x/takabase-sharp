@@ -54,9 +54,9 @@ export const main = async (): Promise<FastifyInstance> => {
 
   fastifyInstance.addSchema(metadataSchema);
 
-  // SWAGGER
+  // LOCALHOST
 
-  if (fastifyInstance.config.ENABLE_SWAGGER) {
+  if (fastifyInstance.config.NODE_ENV === 'localhost') {
     await fastifyInstance.register(fastifySwagger, swaggerConfig);
     await fastifyInstance.register(fastifySwaggerUi, {
       routePrefix: '/docs'
