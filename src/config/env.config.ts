@@ -20,10 +20,6 @@ export const envConfig: FastifyEnvOptions = {
       APP_HOST: {
         type: 'string',
         default: 'localhost'
-      },
-      ENABLE_SWAGGER: {
-        type: 'boolean',
-        default: false
       }
     }
   },
