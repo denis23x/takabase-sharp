@@ -103,8 +103,8 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         busboy.on('finish', async (): Promise<void> => {
           const validationPayload = (): any[] => {
             return [
-              request.server.sharp.getValidationFileSize(reply, formFiles.input.size),
-              request.server.sharp.getValidationMimeType(reply, formFiles.input.mimeType)
+              request.server.sharpPlugin.getValidationFileSize(reply, formFiles.input.size),
+              request.server.sharpPlugin.getValidationMimeType(reply, formFiles.input.mimeType)
             ].filter((validation: FastifyReply | null) => validation !== null);
           };
 
@@ -116,7 +116,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
             return validation[0];
           }
 
-          const sharp: Sharp = request.server.sharp.getSharp(formFiles.input.file);
+          const sharp: Sharp = request.server.sharp(formFiles.input.file);
 
           await sharp
             .webp(formFields)
