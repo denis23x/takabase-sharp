@@ -11,7 +11,7 @@ Setup
 
 Processes
 
-- `start:dev` swagger http://0.0.0.0:8080/docs
+- `start:dev` swagger http://localhost:9000/docs
 - `start:deploy` deploy
 
 Builds

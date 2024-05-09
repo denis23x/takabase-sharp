@@ -61,11 +61,15 @@ main()
 
 /** FIREBASE */
 
+// prettier-ignore
 export const apiHttpsOptions: HttpsOptions = {
   region: 'us-central1',
   minInstances: 0,
   maxInstances: 4,
-  memory: '512MiB'
+  memory: '512MiB',
+  secrets: [
+    'APP_NODE_ENV'
+  ]
 };
 
 export const sharp: HttpsFunction = onRequest(apiHttpsOptions, async (request: Request, response: express.Response) => {
