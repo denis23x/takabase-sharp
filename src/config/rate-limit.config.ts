@@ -1,9 +1,12 @@
 /** @format */
 
 import { FastifyRateLimitOptions } from '@fastify/rate-limit';
-import * as dotenv from 'dotenv';
+import { config } from 'dotenv';
 
-dotenv.config();
+config({
+  path: '.env.takabase-local',
+  override: false
+});
 
 // https://github.com/fastify/fastify-rate-limit
 
@@ -22,4 +25,4 @@ const rateLimitConfigList: Record<string, FastifyRateLimitOptions> = {
   }
 };
 
-export const rateLimitConfig: FastifyRateLimitOptions = rateLimitConfigList[String(process.env.NODE_ENV)];
+export const rateLimitConfig: FastifyRateLimitOptions = rateLimitConfigList[String(process.env.APP_NODE_ENV)];

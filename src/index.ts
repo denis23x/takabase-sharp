@@ -38,9 +38,10 @@ main()
       });
     });
 
+    // DEFAULT
     const options: FastifyListenOptions = {
-      port: Number(fastifyInstance.config.APP_PORT),
-      host: String(fastifyInstance.config.APP_HOST)
+      port: 4400,
+      host: 'localhost'
     };
 
     // PROCESS

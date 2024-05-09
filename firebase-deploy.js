@@ -1,44 +1,73 @@
 const prompts = require('prompts');
 const spawn = require('child_process').spawn;
 
+const projectList = {
+  ['takabase-dev']: {
+    url: 'https://takabase-dev-api.web.app'
+  },
+  ['takabase-local']: {
+    url: 'https://takabase-local-api.web.app'
+  },
+  ['takabase-prod']: {
+    url: 'https://takabase-prod-api.web.app'
+  },
+};
+
 (async () => {
-  const select = await prompts({
+  const project = await prompts({
     type: 'select',
-    name: 'value',
+    name: 'project',
     message: 'Select a environment',
+    choices: Object.keys(projectList).map((key ) => {
+      return {
+        title: key,
+        value: key,
+        description: projectList[key].url,
+      }
+    }),
+    initial: 0
+  });
+
+  const action = await prompts({
+    type: 'select',
+    name: 'action',
+    message: 'Select an action',
     choices: [
       {
-        title: 'takabase-dev',
-        value: 'takabase-dev',
-        description: 'https://takabase-dev-sharp.web.app',
+        title: 'Deploy function',
+        value: 'function',
+        description: projectList[project.project].url,
       },
       {
-        title: 'takabase-local',
-        value: 'takabase-local',
-        description: 'https://takabase-local-sharp.web.app',
-      },
-      {
-        title: 'takabase-prod',
-        value: 'takabase-prod',
-        description: 'https://takabase-prod-sharp.web.app',
-      },
+        title: 'Deploy hosting',
+        value: 'hosting',
+        description: projectList[project.project].url,
+      }
     ],
     initial: 0
   });
 
   const confirm = await prompts({
     type: 'confirm',
-    name: 'value',
+    name: 'confirm',
     message: 'Can you confirm?',
-    initial: select.value !== 'takabase-prod'
+    initial: project.project !== 'takabase-prod'
   });
 
-  if (select.value && confirm.value) {
-    const command = `firebase use ${select.value} && firebase deploy --only functions:sharp,hosting:${select.value}-sharp`;
+  if (project.project && confirm.confirm) {
+    const command = [`firebase use ${project.project}`];
+
+    if (action.action === 'function') {
+      command.push(`firebase deploy --only functions:sharp`);
+    }
+
+    if (action.action === 'hosting') {
+      command.push(`firebase deploy --only hosting:${project.project}-sharp`);
+    }
 
     /** RUN */
 
-    spawn(command, {
+    spawn(command.join(' && '), {
       shell: true,
       stdio:'inherit'
     });

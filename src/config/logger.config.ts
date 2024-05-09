@@ -1,20 +1,64 @@
 /** @format */
 
 import { PinoLoggerOptions } from 'fastify/types/logger';
-import * as dotenv from 'dotenv';
+import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import { config } from 'dotenv';
 
-dotenv.config();
+config({
+  path: '.env.takabase-local',
+  override: false
+});
 
-const loggerConfigList: Record<string, PinoLoggerOptions | boolean> = {
-  localhost: {
-    level: 'debug'
+const loggerConfigBase: PinoLoggerOptions = {
+  base: null,
+  timestamp: (): string => {
+    const date: string = new Date().toISOString();
+
+    return `,"time":"${date}"`;
   },
-  development: {
-    level: 'error'
-  },
-  production: {
-    level: 'error'
+  redact: [
+    'request.headers.authorization',
+    'request.headers.cookie',
+    'request.body.email',
+    'request.body.password',
+    'request.body.newPassword',
+    'request.body.newEmail',
+    'response.headers',
+    'response.cookie'
+  ],
+  serializers: {
+    err(error: FastifyError): any {
+      return {
+        message: error.message
+      };
+    },
+    res(reply: FastifyReply): any {
+      return {
+        statusCode: reply.statusCode
+      };
+    },
+    req: (request: FastifyRequest): any => {
+      return {
+        method: request.method,
+        url: request.url
+      };
+    }
   }
 };
 
-export const loggerConfig: PinoLoggerOptions | boolean = loggerConfigList[String(process.env.NODE_ENV)];
+const loggerConfigList: Record<string, PinoLoggerOptions | boolean> = {
+  localhost: {
+    level: 'debug',
+    ...loggerConfigBase
+  },
+  development: {
+    level: 'info',
+    ...loggerConfigBase
+  },
+  production: {
+    level: 'warn',
+    ...loggerConfigBase
+  }
+};
+
+export const loggerConfig: PinoLoggerOptions | boolean = loggerConfigList[String(process.env.APP_NODE_ENV)];

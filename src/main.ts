@@ -1,7 +1,7 @@
 /** @format */
 
-import fastify, { FastifyRequest } from 'fastify';
-import fastifyEnv from '@fastify/env';
+import fastify, { FastifyRequest, FastifyInstance } from 'fastify';
+import { ContentTypeParserDoneFunction } from 'fastify/types/content-type-parser';
 import fastifyCors from '@fastify/cors';
 import fastifyCompress from '@fastify/compress';
 import fastifyHelmet from '@fastify/helmet';
@@ -9,7 +9,8 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyRateLimit from '@fastify/rate-limit';
 
-import { envConfig } from './config/env.config';
+// CONFIGURATIONS
+
 import { corsConfig } from './config/cors.config';
 import { loggerConfig } from './config/logger.config';
 import { compressConfig } from './config/compress.config';
@@ -17,17 +18,19 @@ import { helmetConfig } from './config/helmet.config';
 import { swaggerConfig } from './config/swagger.config';
 import { rateLimitConfig } from './config/rate-limit.config';
 
+// PLUGINS
+
 import sharpPlugin from './plugins/sharp.plugin';
+
+// ROUTES
 
 import sharpRoutes from './routes';
 import sharpOutputRoutes from './routes/output';
 
+// SCHEMAS
+
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
-
 import { metadataSchema } from './schema/metadata.schema';
-
-import { FastifyInstance } from 'fastify/types/instance';
-import { ContentTypeParserDoneFunction } from 'fastify/types/content-type-parser';
 
 export const main = async (): Promise<FastifyInstance> => {
   const fastifyInstance: FastifyInstance = fastify({
@@ -38,11 +41,12 @@ export const main = async (): Promise<FastifyInstance> => {
 
   // PLUGINS
 
-  await fastifyInstance.register(fastifyEnv, envConfig);
   await fastifyInstance.register(fastifyCors, corsConfig);
   await fastifyInstance.register(fastifyCompress, compressConfig);
   await fastifyInstance.register(fastifyHelmet, helmetConfig);
   await fastifyInstance.register(fastifyRateLimit, rateLimitConfig);
+
+  // PLUGINS HANDMADE
 
   await fastifyInstance.register(sharpPlugin);
 
@@ -56,7 +60,7 @@ export const main = async (): Promise<FastifyInstance> => {
 
   // LOCALHOST
 
-  if (fastifyInstance.config.NODE_ENV === 'localhost') {
+  if (process.env.APP_NODE_ENV === 'localhost') {
     await fastifyInstance.register(fastifySwagger, swaggerConfig);
     await fastifyInstance.register(fastifySwaggerUi, {
       routePrefix: '/docs'
