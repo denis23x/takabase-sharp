@@ -20,7 +20,11 @@ import { rateLimitConfig } from './config/rate-limit.config';
 
 // PLUGINS
 
+import authPlugin from './plugins/auth.plugin';
+import firebasePlugin from './plugins/firebase.plugin';
+import firestorePlugin from './plugins/firestore.plugin';
 import sharpPlugin from './plugins/sharp.plugin';
+import storagePlugin from './plugins/storage.plugin';
 
 // ROUTES
 
@@ -45,6 +49,14 @@ export const main = async (): Promise<FastifyInstance> => {
   await fastifyInstance.register(fastifyCompress, compressConfig);
   await fastifyInstance.register(fastifyHelmet, helmetConfig);
   await fastifyInstance.register(fastifyRateLimit, rateLimitConfig);
+
+  // FIREBASE
+
+  fastifyInstance.register(firebasePlugin).after(async () => {
+    await fastifyInstance.register(authPlugin);
+    await fastifyInstance.register(firestorePlugin);
+    await fastifyInstance.register(storagePlugin);
+  });
 
   // PLUGINS HANDMADE
 
