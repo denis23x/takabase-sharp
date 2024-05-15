@@ -13,11 +13,9 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       querystring: {
         type: 'object',
         properties: {
-          // prettier-ignore
           url: {
             type: 'string',
-            default: 'https://firebasestorage.googleapis.com/v0/b/takabase-local.appspot.com/o/seed/1.webp?alt=media',
-            pattern: '^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$'
+            default: 'https://firebasestorage.googleapis.com/v0/b/takabase-local.appspot.com/o/seed/1.webp?alt=media'
           }
         },
         required: ['url'],

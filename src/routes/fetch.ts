@@ -14,11 +14,9 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       querystring: {
         type: 'object',
         properties: {
-          // prettier-ignore
           url: {
             type: 'string',
-            default: 'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg',
-            pattern: '^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$'
+            default: 'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg'
           }
         },
         required: ['url'],
