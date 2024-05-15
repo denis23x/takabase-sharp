@@ -1,23 +1,22 @@
 /** @format */
 
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { OutputDownloadUrlDto } from '../../types/dto/output/download-url';
+import { OutputAppCheckDto } from '../../types/dto/output/app-check';
+import { DownloadResponse } from '@google-cloud/storage/build/cjs/src/file';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
   fastify.route({
     method: 'GET',
-    url: 'download-url',
+    url: 'app-check',
     schema: {
       tags: ['Output'],
-      description: 'Get image downloadable url of Firebase Storage',
+      description: 'Get image file of Firebase Storage',
       querystring: {
         type: 'object',
         properties: {
-          // prettier-ignore
           url: {
             type: 'string',
-            default: 'https://firebasestorage.googleapis.com/v0/b/takabase-local.appspot.com/o/seed/1.webp?alt=media',
-            pattern: '^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$'
+            default: 'https://firebasestorage.googleapis.com/v0/b/takabase-local.appspot.com/o/seed/1.webp?alt=media'
           }
         },
         required: ['url'],
@@ -25,15 +24,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       },
       response: {
         200: {
-          type: 'object',
-          properties: {
-            data: {
-              $ref: 'downloadUrlSchema#'
-            },
-            statusCode: {
-              type: 'number'
-            }
-          }
+          type: 'array'
         },
         400: {
           $ref: 'responseErrorSchema#'
@@ -43,20 +34,19 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         }
       }
     },
-    handler: async (request: FastifyRequest<OutputDownloadUrlDto>, reply: FastifyReply): Promise<any> => {
+    handler: async (request: FastifyRequest<OutputAppCheckDto>, reply: FastifyReply): Promise<any> => {
       const { url }: Record<string, any> = request.query;
 
       /** Firebase Storage */
 
       await request.server.storagePlugin
-        .getDownloadURL(url)
-        .then((downloadURL: string) => {
-          return reply.status(200).send({
-            data: {
-              downloadURL
-            },
-            statusCode: 200
-          });
+        .getFile(url)
+        .then((downloadResponse: DownloadResponse) => {
+          return reply
+            .header('Content-Disposition', 'inline')
+            .type('image/webp')
+            .status(200)
+            .send(downloadResponse.pop());
         })
         .catch((error: any) => {
           return reply.status(500).send({

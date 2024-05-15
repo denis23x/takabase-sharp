@@ -1,6 +1,6 @@
 /** @format */
 
-export type OutputDownloadUrlDto = {
+export type OutputAppCheckDto = {
   Querystring: {
     url: string;
   };

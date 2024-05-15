@@ -35,6 +35,9 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         additionalProperties: false
       },
       response: {
+        200: {
+          type: 'array'
+        },
         400: {
           $ref: 'responseErrorSchema#'
         },

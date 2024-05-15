@@ -2,7 +2,6 @@
 
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { FetchDto } from '../types/dto/fetch';
-import { parse, ParsedPath } from 'path';
 import axios, { AxiosResponse } from 'axios';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
@@ -26,6 +25,9 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         additionalProperties: false
       },
       response: {
+        200: {
+          type: 'array'
+        },
         400: {
           $ref: 'responseErrorSchema#'
         },
@@ -36,9 +38,6 @@ export default async function (fastify: FastifyInstance): Promise<void> {
     },
     handler: async (request: FastifyRequest<FetchDto>, reply: FastifyReply): Promise<any> => {
       const { url }: Record<string, string> = request.query;
-
-      const parsedURL: URL = new URL(url);
-      const parsedPath: ParsedPath = parse(parsedURL.pathname);
 
       await axios
         .get(url, {
@@ -82,11 +81,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
           const mimeType: string | null = getMimeType(buffer);
 
           if (mimeType) {
-            return reply
-              .header('Content-Disposition', 'attachment; filename=' + parsedPath.base)
-              .type(mimeType)
-              .status(200)
-              .send(buffer);
+            return reply.header('Content-Disposition', 'inline').type(mimeType).status(200).send(buffer);
           } else {
             return reply.status(400).send({
               error: 'Bad Request',

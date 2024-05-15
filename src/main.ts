@@ -34,6 +34,7 @@ import sharpOutputRoutes from './routes/output';
 // SCHEMAS
 
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
+import { downloadUrlSchema } from './schema/output/download-url.schema';
 import { metadataSchema } from './schema/metadata.schema';
 
 export const main = async (): Promise<FastifyInstance> => {
@@ -68,6 +69,7 @@ export const main = async (): Promise<FastifyInstance> => {
 
   // JSON SCHEMA MODELS
 
+  fastifyInstance.addSchema(downloadUrlSchema);
   fastifyInstance.addSchema(metadataSchema);
 
   // LOCALHOST
