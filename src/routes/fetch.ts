@@ -12,15 +12,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       tags: ['Sharp'],
       description: 'Get buffer from url',
       querystring: {
-        type: 'object',
-        properties: {
-          url: {
-            type: 'string',
-            default: 'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg'
-          }
-        },
-        required: ['url'],
-        additionalProperties: false
+        $ref: 'querystringUrlSchema#'
       },
       response: {
         200: {

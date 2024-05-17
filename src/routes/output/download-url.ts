@@ -11,15 +11,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       tags: ['Output'],
       description: 'Get image downloadable url of Firebase Storage',
       querystring: {
-        type: 'object',
-        properties: {
-          url: {
-            type: 'string',
-            default: 'https://firebasestorage.googleapis.com/v0/b/takabase-local.appspot.com/o/seed/1.webp?alt=media'
-          }
-        },
-        required: ['url'],
-        additionalProperties: false
+        $ref: 'querystringUrlFirebaseStorageSchema#'
       },
       response: {
         200: {
