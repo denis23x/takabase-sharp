@@ -16,12 +16,12 @@ export const swaggerConfig: SwaggerOptions = {
     },
     tags: [
       {
-        name: 'Sharp',
-        description: 'Node.js image processing'
-      },
-      {
         name: 'Output',
         description: 'Get output'
+      },
+      {
+        name: 'Utilities',
+        description: 'Image utilities'
       }
     ]
   }

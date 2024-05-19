@@ -41,15 +41,13 @@ main()
     // DEFAULT
     const options: FastifyListenOptions = {
       port: 4400,
-      host: 'localhost'
+      host: 'localhost',
+      listenTextResolver: () => ''
     };
 
     // PROCESS
 
-    fastifyInstance
-      .listen(options)
-      .then(() => fastifyInstance.log.info('Ready, Waiting for connections...'))
-      .catch((error: any) => fastifyInstance.log.error(error));
+    fastifyInstance.listen(options).catch((error: any) => fastifyInstance.log.error(error));
   })
   .catch((error: any) => {
     console.error(error);

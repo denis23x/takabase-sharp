@@ -31,15 +31,14 @@ import storagePlugin from './plugins/storage.plugin';
 
 // ROUTES
 
-import sharpRoutes from './routes';
-import sharpOutputRoutes from './routes/output';
+import outputRoutes from './routes/output';
+import utilitiesRoutes from './routes/utilities';
 
 // SCHEMAS
 
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
 import { partsFirebaseUrlStorageSchema } from './schema/parts/parts-firebase-url-storage.schema';
 import { partsUrlSchema } from './schema/parts/parts-url.schema';
-import { metadataSchema } from './schema/metadata.schema';
 
 export const main = async (): Promise<FastifyInstance> => {
   const fastifyInstance: FastifyInstance = fastify({
@@ -86,10 +85,6 @@ export const main = async (): Promise<FastifyInstance> => {
   fastifyInstance.addSchema(partsFirebaseUrlStorageSchema);
   fastifyInstance.addSchema(partsUrlSchema);
 
-  // JSON SCHEMA MODELS
-
-  fastifyInstance.addSchema(metadataSchema);
-
   // LOCALHOST
 
   if (process.env.APP_NODE_ENV === 'localhost') {
@@ -117,11 +112,11 @@ export const main = async (): Promise<FastifyInstance> => {
 
   await fastifyInstance.register(
     async (api: FastifyInstance): Promise<void> => {
-      api.register(sharpRoutes, {
-        prefix: '/'
-      });
-      api.register(sharpOutputRoutes, {
+      api.register(outputRoutes, {
         prefix: '/output/'
+      });
+      api.register(utilitiesRoutes, {
+        prefix: '/utilities/'
       });
     },
     {

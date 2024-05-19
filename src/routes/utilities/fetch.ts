@@ -1,7 +1,7 @@
 /** @format */
 
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { FetchDto } from '../types/dto/fetch';
+import { FetchDto } from '../../types/dto/utilities/fetch';
 import axios, { AxiosResponse } from 'axios';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
@@ -9,7 +9,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
     method: 'GET',
     url: 'fetch',
     schema: {
-      tags: ['Sharp'],
+      tags: ['Utilities'],
       description: 'Get buffer from url',
       querystring: {
         type: 'object',

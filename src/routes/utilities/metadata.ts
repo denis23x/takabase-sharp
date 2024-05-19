@@ -1,7 +1,7 @@
 /** @format */
 
 import { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import { MetadataDto } from '../types/dto/metadata';
+import { MetadataDto } from '../../types/dto/utilities/metadata';
 import { Metadata, Sharp } from 'sharp';
 import Busboy from 'busboy';
 
@@ -10,7 +10,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
     method: 'POST',
     url: 'metadata',
     schema: {
-      tags: ['Sharp'],
+      tags: ['Utilities'],
       description: 'Get metadata of image',
       consumes: ['multipart/form-data'],
       body: {
@@ -29,7 +29,44 @@ export default async function (fastify: FastifyInstance): Promise<void> {
           type: 'object',
           properties: {
             data: {
-              $ref: 'metadataSchema#'
+              properties: {
+                format: {
+                  type: 'string'
+                },
+                size: {
+                  type: 'number'
+                },
+                width: {
+                  type: 'number'
+                },
+                height: {
+                  type: 'number'
+                },
+                space: {
+                  type: 'string'
+                },
+                channels: {
+                  type: 'number'
+                },
+                depth: {
+                  type: 'string'
+                },
+                density: {
+                  type: 'number'
+                },
+                isProgressive: {
+                  type: 'boolean'
+                },
+                paletteBitDepth: {
+                  type: 'number'
+                },
+                hasProfile: {
+                  type: 'boolean'
+                },
+                hasAlpha: {
+                  type: 'boolean'
+                }
+              }
             },
             statusCode: {
               type: 'number'
