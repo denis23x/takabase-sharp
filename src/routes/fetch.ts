@@ -12,7 +12,13 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       tags: ['Sharp'],
       description: 'Get buffer from url',
       querystring: {
-        $ref: 'querystringUrlSchema#'
+        type: 'object',
+        properties: {
+          url: {
+            $ref: 'partsUrlSchema#'
+          }
+        },
+        required: ['url']
       },
       response: {
         200: {

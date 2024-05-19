@@ -27,8 +27,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
           },
           input: {
             type: 'string',
-            contentMediaType: 'image/png',
-            contentEncoding: 'binary'
+            format: 'binary'
           }
         },
         required: ['input'],

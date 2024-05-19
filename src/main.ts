@@ -1,6 +1,6 @@
 /** @format */
 
-import fastify, { FastifyRequest, FastifyInstance } from 'fastify';
+import fastify, { FastifyRequest, FastifyInstance, FastifyReply } from 'fastify';
 import { ContentTypeParserDoneFunction } from 'fastify/types/content-type-parser';
 import fastifyCors from '@fastify/cors';
 import fastifyCompress from '@fastify/compress';
@@ -8,6 +8,8 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyRateLimit from '@fastify/rate-limit';
+import fastifyStatic from '@fastify/static';
+import fastifyEtag from '@fastify/etag';
 
 // CONFIGURATIONS
 
@@ -17,6 +19,7 @@ import { compressConfig } from './config/compress.config';
 import { helmetConfig } from './config/helmet.config';
 import { swaggerConfig } from './config/swagger.config';
 import { rateLimitConfig } from './config/rate-limit.config';
+import { staticConfig } from './config/static.config';
 
 // PLUGINS
 
@@ -33,16 +36,20 @@ import sharpOutputRoutes from './routes/output';
 
 // SCHEMAS
 
-import { querystringUrlSchema } from './schema/crud/querystring/querystring-url.schema';
-import { querystringUrlFirebaseStorageSchema } from './schema/crud/querystring/querystring-url-firebase-storage.schema';
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
-import { downloadUrlSchema } from './schema/output/download-url.schema';
+import { partsFirebaseUrlStorageSchema } from './schema/parts/parts-firebase-url-storage.schema';
+import { partsUrlSchema } from './schema/parts/parts-url.schema';
 import { metadataSchema } from './schema/metadata.schema';
 
 export const main = async (): Promise<FastifyInstance> => {
   const fastifyInstance: FastifyInstance = fastify({
     ignoreTrailingSlash: true,
     ignoreDuplicateSlashes: true,
+    ajv: {
+      customOptions: {
+        keywords: ['example']
+      }
+    },
     logger: loggerConfig
   });
 
@@ -52,6 +59,14 @@ export const main = async (): Promise<FastifyInstance> => {
   await fastifyInstance.register(fastifyCompress, compressConfig);
   await fastifyInstance.register(fastifyHelmet, helmetConfig);
   await fastifyInstance.register(fastifyRateLimit, rateLimitConfig);
+  await fastifyInstance.register(fastifyStatic, staticConfig);
+  await fastifyInstance.register(fastifyEtag);
+
+  // INDEX
+
+  fastifyInstance.setNotFoundHandler((request: FastifyRequest, reply: FastifyReply) => {
+    return reply.code(200).type('text/html').sendFile('index.html');
+  });
 
   // FIREBASE
 
@@ -67,13 +82,12 @@ export const main = async (): Promise<FastifyInstance> => {
 
   // JSON SCHEMA CRUD
 
-  fastifyInstance.addSchema(querystringUrlSchema);
-  fastifyInstance.addSchema(querystringUrlFirebaseStorageSchema);
   fastifyInstance.addSchema(responseErrorSchema);
+  fastifyInstance.addSchema(partsFirebaseUrlStorageSchema);
+  fastifyInstance.addSchema(partsUrlSchema);
 
   // JSON SCHEMA MODELS
 
-  fastifyInstance.addSchema(downloadUrlSchema);
   fastifyInstance.addSchema(metadataSchema);
 
   // LOCALHOST

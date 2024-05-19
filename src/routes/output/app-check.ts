@@ -12,7 +12,13 @@ export default async function (fastify: FastifyInstance): Promise<void> {
       tags: ['Output'],
       description: 'Get image file of Firebase Storage',
       querystring: {
-        $ref: 'querystringUrlFirebaseStorageSchema#'
+        type: 'object',
+        properties: {
+          url: {
+            $ref: 'partsFirebaseUrlStorageSchema#'
+          }
+        },
+        required: ['url']
       },
       response: {
         200: {
