@@ -3,6 +3,12 @@
 import fp from 'fastify-plugin';
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 import { initializeApp, getApp, cert, App, getApps } from 'firebase-admin/app';
+import { config } from 'dotenv';
+
+config({
+  path: '.env.takabase-local',
+  override: false
+});
 
 const firebasePlugin: FastifyPluginAsync = fp(async function (fastifyInstance: FastifyInstance) {
   fastifyInstance.decorate('firebase', (): App => {

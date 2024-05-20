@@ -4,7 +4,7 @@ import { main } from './main';
 import { FastifyInstance } from 'fastify';
 import { FastifyListenOptions } from 'fastify/types/instance';
 import { HttpsFunction, HttpsOptions, onRequest, Request } from 'firebase-functions/v2/https';
-import * as express from 'express';
+import { Response } from 'express';
 
 /** FASTIFY */
 
@@ -65,13 +65,13 @@ export const apiHttpsOptions: HttpsOptions = {
   minInstances: 0,
   maxInstances: 4,
   memory: '512MiB',
-  secrets: [
+  secrets: process.env.APP_NODE_ENV === 'localhost' ? [] : [
     'APP_NODE_ENV',
     'APP_SERVICE_ACCOUNT'
   ]
 };
 
-export const sharp: HttpsFunction = onRequest(apiHttpsOptions, async (request: Request, response: express.Response) => {
+export const sharp: HttpsFunction = onRequest(apiHttpsOptions, async (request: Request, response: Response) => {
   const fastifyInstance: FastifyInstance = await main();
 
   await fastifyInstance.ready();
