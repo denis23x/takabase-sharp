@@ -19,19 +19,18 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         properties: {
           quality: {
             type: 'number',
-            default: 80
+            example: 80
           },
           lossless: {
             type: 'boolean',
-            default: false
+            example: false
           },
           input: {
             type: 'string',
             format: 'binary'
           }
         },
-        required: ['input'],
-        additionalProperties: false
+        required: ['input']
       },
       response: {
         200: {

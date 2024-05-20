@@ -6,7 +6,7 @@ export const swaggerConfig: SwaggerOptions = {
   openapi: {
     info: {
       title: 'APIs using Fastify',
-      description: '## Moderation using Swagger, Fastify and Sharp',
+      description: '## Image processing using Swagger, Fastify and Sharp',
       contact: {
         name: 'denis23x',
         url: 'https://takabase.com',

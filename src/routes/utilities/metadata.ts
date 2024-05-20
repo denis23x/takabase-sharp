@@ -21,8 +21,7 @@ export default async function (fastify: FastifyInstance): Promise<void> {
             format: 'binary'
           }
         },
-        required: ['input'],
-        additionalProperties: false
+        required: ['input']
       },
       response: {
         200: {
