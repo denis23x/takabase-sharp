@@ -21,13 +21,13 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         required: ['url']
       },
       response: {
-        200: {
+        '200': {
           type: 'array'
         },
-        400: {
+        '4xx': {
           $ref: 'responseErrorSchema#'
         },
-        500: {
+        '5xx': {
           $ref: 'responseErrorSchema#'
         }
       }
