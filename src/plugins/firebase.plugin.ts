@@ -1,8 +1,9 @@
 /** @format */
 
 import fp from 'fastify-plugin';
-import { FastifyInstance, FastifyPluginAsync } from 'fastify';
-import { initializeApp, getApp, cert, App, getApps } from 'firebase-admin/app';
+import { initializeApp, getApp, cert, getApps } from 'firebase-admin/app';
+import type { App } from 'firebase-admin/app';
+import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 const firebasePlugin: FastifyPluginAsync = fp(async function (fastifyInstance: FastifyInstance) {
   fastifyInstance.decorate('firebase', (): App => {

@@ -1,7 +1,7 @@
 /** @format */
 
-import { Firestore } from 'firebase-admin/firestore';
-import { DocumentReference } from 'firebase-admin/lib/firestore';
+import type { Firestore } from 'firebase-admin/firestore';
+import type { DocumentReference } from 'firebase-admin/lib/firestore';
 
 declare module 'fastify' {
   interface FastifyInstance {

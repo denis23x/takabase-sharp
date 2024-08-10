@@ -1,8 +1,8 @@
 /** @format */
 
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { OutputAppCheckDto } from '../../types/dto/output/app-check';
-import { DownloadResponse } from '@google-cloud/storage/build/cjs/src/file';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import type { OutputAppCheckDto } from '../../types/dto/output/app-check';
+import type { DownloadResponse } from '@google-cloud/storage/build/cjs/src/file';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
   fastify.route({

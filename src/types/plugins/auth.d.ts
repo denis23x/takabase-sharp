@@ -1,6 +1,6 @@
 /** @format */
 
-import { Auth } from 'firebase-admin/auth';
+import type { Auth } from 'firebase-admin/auth';
 
 declare module 'fastify' {
   interface FastifyInstance {

@@ -1,6 +1,6 @@
 /** @format */
 
-import { Sharp } from 'sharp';
+import type { Sharp } from 'sharp';
 
 declare module 'fastify' {
   interface FastifyInstance {

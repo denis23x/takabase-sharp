@@ -1,8 +1,8 @@
 /** @format */
 
 import fp from 'fastify-plugin';
-import { FastifyInstance, FastifyPluginAsync, FastifyReply } from 'fastify';
 import sharp from 'sharp';
+import type { FastifyInstance, FastifyPluginAsync, FastifyReply } from 'fastify';
 
 const sharpPlugin: FastifyPluginAsync = fp(async function (fastifyInstance: FastifyInstance) {
   fastifyInstance.decorate('sharp', (buffer: Buffer) => sharp(buffer));

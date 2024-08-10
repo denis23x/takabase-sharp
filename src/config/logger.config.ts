@@ -1,8 +1,8 @@
 /** @format */
 
-import { PinoLoggerOptions } from 'fastify/types/logger';
-import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { config } from 'dotenv';
+import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import type { PinoLoggerOptions } from 'fastify/types/logger';
 
 config({
   path: '.env.takabase-local',

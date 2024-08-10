@@ -1,9 +1,9 @@
 /** @format */
 
-import { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import { MetadataDto } from '../../types/dto/utilities/metadata';
-import { Metadata, Sharp } from 'sharp';
 import Busboy from 'busboy';
+import type { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
+import type { MetadataDto } from '../../types/dto/utilities/metadata';
+import type { Metadata, Sharp } from 'sharp';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
   fastify.route({

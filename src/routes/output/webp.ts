@@ -1,10 +1,11 @@
 /** @format */
 
-import { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import { OutputWebPDto } from '../../types/dto/output/webp';
-import { Sharp } from 'sharp';
-import { parse, ParsedPath } from 'path';
 import Busboy from 'busboy';
+import { parse } from 'path';
+import type { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
+import type { OutputWebPDto } from '../../types/dto/output/webp';
+import type { Sharp } from 'sharp';
+import type { ParsedPath } from 'path';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
   fastify.route({

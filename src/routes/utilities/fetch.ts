@@ -1,8 +1,9 @@
 /** @format */
 
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { FetchDto } from '../../types/dto/utilities/fetch';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import type { FetchDto } from '../../types/dto/utilities/fetch';
+import type { AxiosResponse } from 'axios';
 
 export default async function (fastify: FastifyInstance): Promise<void> {
   fastify.route({
