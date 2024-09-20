@@ -21,7 +21,7 @@ const storagePlugin: FastifyPluginAsync = fp(async function (fastifyInstance: Fa
       const url: URL = new URL(decodeURIComponent(imageUrl));
       const urlPath: string = url.pathname.split('/o/').pop();
 
-      const file: File = fastifyInstance.bucket.file(urlPath);
+      const file: File = fastifyInstance.storageBucket.file(urlPath);
 
       return getDownloadURL(file);
     },
@@ -29,7 +29,7 @@ const storagePlugin: FastifyPluginAsync = fp(async function (fastifyInstance: Fa
       const url: URL = new URL(decodeURIComponent(imageUrl));
       const urlPath: string = url.pathname.split('/o/').pop();
 
-      return fastifyInstance.bucket.file(urlPath).download();
+      return fastifyInstance.storageBucket.file(urlPath).download();
     }
   });
 });

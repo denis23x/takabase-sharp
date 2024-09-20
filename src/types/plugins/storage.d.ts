@@ -6,7 +6,7 @@ import type { Bucket, DownloadResponse } from '@google-cloud/storage';
 declare module 'fastify' {
   interface FastifyInstance {
     storage: Storage;
-    bucket: Bucket;
+    storageBucket: Bucket;
     storagePlugin: {
       getDownloadURL: (imageUrl: string) => Promise<string>;
       getFile: (imageUrl: string) => Promise<DownloadResponse>;

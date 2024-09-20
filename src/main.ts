@@ -38,6 +38,7 @@ import utilitiesRoutes from './routes/utilities';
 // SCHEMAS
 
 import { responseErrorSchema } from './schema/crud/response/response-error.schema';
+import { partsFirebaseUidSchema } from './schema/parts/parts-firebase-uid.schema';
 import { partsFirebaseUrlStorageSchema } from './schema/parts/parts-firebase-url-storage.schema';
 import { partsUrlSchema } from './schema/parts/parts-url.schema';
 
@@ -84,6 +85,7 @@ export const main = async (): Promise<FastifyInstance> => {
   // JSON SCHEMA CRUD
 
   fastifyInstance.addSchema(responseErrorSchema);
+  fastifyInstance.addSchema(partsFirebaseUidSchema);
   fastifyInstance.addSchema(partsFirebaseUrlStorageSchema);
   fastifyInstance.addSchema(partsUrlSchema);
 
