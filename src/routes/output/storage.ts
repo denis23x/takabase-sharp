@@ -49,10 +49,10 @@ export default async function (fastify: FastifyInstance): Promise<void> {
             .send(downloadResponse.pop());
         })
         .catch((error: any) => {
-          return reply.status(500).send({
-            error: 'Internal Server Error',
+          return reply.status(error.response.statusCode).send({
+            error: error.response.statusMessage,
             message: error.message,
-            statusCode: 500
+            statusCode: error.response.statusCode
           });
         });
     }
