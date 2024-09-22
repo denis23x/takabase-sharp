@@ -16,10 +16,12 @@ export default async function (fastify: FastifyInstance): Promise<void> {
         type: 'object',
         properties: {
           path: {
-            $ref: 'partsStorageSchema#'
+            type: 'string',
+            enum: ['avatars', 'covers', 'images', 'seed', 'temp']
           },
           uid: {
-            $ref: 'partsNanoUidSchema#'
+            type: 'string',
+            pattern: '^[a-zA-Z0-9]+\\.webp$'
           }
         }
       },
