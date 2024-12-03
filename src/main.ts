@@ -64,18 +64,20 @@ export const main = async (): Promise<FastifyInstance> => {
   await fastifyInstance.register(fastifyStatic, staticConfig);
   await fastifyInstance.register(fastifyEtag);
 
-  // INDEX
-
-  fastifyInstance.setNotFoundHandler((request: FastifyRequest, reply: FastifyReply) => {
-    return reply.code(200).type('text/html').sendFile('index.html');
-  });
-
   // FIREBASE
 
   fastifyInstance.register(firebasePlugin).after(async () => {
     await fastifyInstance.register(authPlugin);
     await fastifyInstance.register(firestorePlugin);
     await fastifyInstance.register(storagePlugin);
+  });
+
+  // NOINDEX
+
+  fastifyInstance.addHook('onSend', async (_, reply: FastifyReply, payload) => {
+    reply.header('X-Robots-Tag', 'noindex');
+
+    return payload;
   });
 
   // PLUGINS HANDMADE
